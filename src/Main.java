@@ -138,7 +138,7 @@ public class Main {
         System.out.println("Lista de carros cadastrados: ");
         sistema.listarCarros();
 
-        // Alterando a disponibilidade do carro 1 (Gol, índice 1)
+        // Alterando a disponibilidade do carro 2
         System.out.println("\nAlterando a disponibilidade do carro 2 (Gol): ");
         sistema.alterarDisponibilidade(1);
 
