@@ -5,28 +5,28 @@ Gerenciamento de Carros.*/
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-// Classe Carro
+//Classe Carro
 class Carro {
     private String modelo;
     private String marca;
     private int ano;
     private String placa;
     private double preco;
-    private boolean disponivel;  // Atributo que controla a disponibilidade
+    private boolean disponivel;
 
-    // Construtor
+    //Construtor
     public Carro(String modelo, String marca, int ano, String placa, double preco) {
         this.modelo = modelo;
         this.marca = marca;
         this.ano = ano;
         this.placa = placa;
         this.preco = preco;
-        this.disponivel = true;  // Por padrão, o carro está disponível
+        this.disponivel = true; // Por padrão, o carro está disponível
     }
 
     // Getters e Setters
-
     public String getModelo() {
         return modelo;
     }
@@ -67,84 +67,104 @@ class Carro {
         this.preco = preco;
     }
 
-    // Método para exibir as informações do carro
-    public void exibirInfo() {
-        String status = disponivel ? "Disponível" : "Indisponível"; // Verifica status de disponibilidade
-        System.out.println("Modelo: " + modelo);
-        System.out.println("Marca: " + marca);
-        System.out.println("Ano: " + ano);
-        System.out.println("Placa: " + placa);
-        System.out.println("Preço: R$ " + preco);
-        System.out.println("Status: " + status);
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
-    // Método para alterar a disponibilidade do carro
     public void alterarDisponibilidade() {
-        this.disponivel = !this.disponivel;  // Alterna o estado de disponibilidade
+        this.disponivel = !this.disponivel;
+    }
+
+    @Override
+    public String toString() {
+        String status = disponivel ? "Disponível" : "Indisponível";
+        return "Modelo: " + modelo + "\n" +
+                "Marca: " + marca + "\n" +
+                "Ano: " + ano + "\n" +
+                "Placa: " + placa + "\n" +
+                "Preço: R$ " + preco + "\n" +
+                "Status: " + status + "\n";
     }
 }
 
-class GerenciamentoDeCarros {
-    private List<Carro> carros;
-
-    public GerenciamentoDeCarros() {
-        carros = new ArrayList<>();
-    }
-
-    public void adicionarCarro(Carro carro){
-        carros.add(carro);
-    }
-
-    public void listarCarros() {
-        if (carros.isEmpty()) {
-            System.out.println("Não há carros cadastrados.");
-        } else {
-            for (Carro carro : carros) {
-                carro.exibirInfo();
-                System.out.println(); // Apenas para separar cada carro na saída
-            }
-        }
-    }
-
-    public void alterarDisponibilidade(int indice) {
-        if (indice >= 0 && indice < carros.size()) {
-            Carro carro = carros.get(indice);
-            carro.alterarDisponibilidade();  // Altera a disponibilidade do carro
-            System.out.println("Disponibilidade alterada: ");
-            carro.exibirInfo();  // Exibe as informações atualizadas do carro
-        } else {
-            System.out.println("Índice inválido.");
-        }
-    }
-}
-
-// Classe Main
+//Classe Main
 public class Main {
     public static void main(String[] args) {
-        // Criando alguns carros
-        Carro carro1 = new Carro("Uno", "Fiat", 2020, "DSFDFS", 30000);
-        Carro carro2 = new Carro("Gol", "Volkswagen", 2018, "ASKJDH", 45000);
-        Carro carro3 = new Carro("Fox", "Volkswagen", 2018, "AOALAS", 60000);
+        Scanner scanner = new Scanner(System.in);
+        List<Carro> carros = new ArrayList<>();
 
-        // Criando o sistema de gerenciamento
-        GerenciamentoDeCarros sistema = new GerenciamentoDeCarros();
+        while (true) {
+            System.out.println("\n----* Sistema de Gerenciamento de Carros *----");
+            System.out.println("1. Adicionar Carro");
+            System.out.println("2. Listar Carros");
+            System.out.println("3. Alterar Disponibilidade");
+            System.out.println("4. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir quebra de linha
 
-        // Adicionando carros ao sistema
-        sistema.adicionarCarro(carro1);
-        sistema.adicionarCarro(carro2);
-        sistema.adicionarCarro(carro3);
+            switch (opcao) {
+                case 1 -> {
+                    System.out.println("\n=== Adicionar Carro ===");
+                    System.out.print("Digite o modelo: ");
+                    String modelo = scanner.nextLine();
 
-        // Listando todos os carros cadastrados
-        System.out.println("Lista de carros cadastrados: ");
-        sistema.listarCarros();
+                    System.out.print("Digite a marca: ");
+                    String marca = scanner.nextLine();
 
-        // Alterando a disponibilidade do carro 2
-        System.out.println("\nAlterando a disponibilidade do carro 2 (Gol): ");
-        sistema.alterarDisponibilidade(1);
+                    System.out.print("Digite o ano: ");
+                    int ano = scanner.nextInt();
 
-        // Listando os carros após a alteração da disponibilidade
-        System.out.println("\nLista de carros após alteração de disponibilidade: ");
-        sistema.listarCarros();
+                    System.out.print("Digite a placa: ");
+                    scanner.nextLine(); // Consumir quebra de linha
+                    String placa = scanner.nextLine();
+
+                    System.out.print("Digite o preço: ");
+                    double preco = scanner.nextDouble();
+                    scanner.nextLine(); // Consumir quebra de linha
+
+                    Carro carro = new Carro(modelo, marca, ano, placa, preco);
+                    carros.add(carro);
+                    System.out.println("Carro adicionado com sucesso!");
+                }
+                case 2 -> {
+                    System.out.println("\n=== Listar Carros ===");
+                    if (carros.isEmpty()) {
+                        System.out.println("Não há carros cadastrados.");
+                    } else {
+                        for (int i = 0; i < carros.size(); i++) {
+                            System.out.println("Carro " + (i + 1) + ":");
+                            System.out.println(carros.get(i));
+                        }
+                    }
+                }
+                case 3 -> {
+                    System.out.println("\n=== Alterar Disponibilidade ===");
+                    if (carros.isEmpty()) {
+                        System.out.println("Não há carros cadastrados.");
+                    } else {
+                        System.out.print("Digite o número do carro para alterar disponibilidade: ");
+                        int indice = scanner.nextInt();
+                        scanner.nextLine(); // Consumir quebra de linha
+
+                        if (indice > 0 && indice <= carros.size()) {
+                            Carro carro = carros.get(indice - 1);
+                            carro.alterarDisponibilidade();
+                            System.out.println("Disponibilidade alterada com sucesso!");
+                            System.out.println(carro);
+                        } else {
+                            System.out.println("Índice inválido.");
+                        }
+                    }
+                }
+                case 4 -> {
+                    System.out.println("Saindo do sistema...");
+                    scanner.close();
+                    return;
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
     }
 }
 
