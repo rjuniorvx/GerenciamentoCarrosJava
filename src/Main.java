@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//Classe Carro
 class Carro {
     private String modelo;
     private String marca;
@@ -16,7 +15,6 @@ class Carro {
     private double preco;
     private boolean disponivel;
 
-    //Construtor
     public Carro(String modelo, String marca, int ano, String placa, double preco) {
         this.modelo = modelo;
         this.marca = marca;
@@ -87,7 +85,6 @@ class Carro {
     }
 }
 
-//Classe Main
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
